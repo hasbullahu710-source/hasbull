@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Website portofolio pribadi — profil, keahlian, proyek, dan kontak.">
+  <title>Portofolio | Hasbullah</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2e;
+      --panel-2: #18223a;
+      --text: #f3f6ff;
+      --muted: #a8b3ca;
+      --accent: #70e1cf;
+      --accent-2: #8ba7ff;
+      --border: rgba(255,255,255,.11);
+      --shadow: 0 20px 55px rgba(0,0,0,.24);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 80% 0%, #1c2b4a 0, transparent 32%), var(--bg);
+      color: var(--text); line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1100px, calc(100% - 40px)); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(16px);
+      background: rgba(11,16,32,.82); border-bottom: 1px solid var(--border);
+    }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-weight: 850; font-size: 1.15rem; letter-spacing: -.04em; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 25px; color: var(--muted); font-size: .94rem; }
+    .nav-links a:hover { color: var(--accent); }
+    .menu-btn { display: none; border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+    .hero { padding: 95px 0 85px; display: grid; grid-template-columns: 1.25fr .75fr; align-items: center; gap: 60px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--accent); font-weight: 750; font-size: .84rem; letter-spacing: .11em; text-transform: uppercase; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 18px var(--accent); }
+    h1 { font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.06; letter-spacing: -.065em; margin: 18px 0 22px; }
+    h1 .gradient { background: linear-gradient(100deg, var(--accent), var(--accent-2)); color: transparent; background-clip: text; }
+    .hero p { color: var(--muted); font-size: 1.08rem; max-width: 610px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 12px 19px; font-weight: 750; border: 1px solid var(--border); transition: transform .2s, border-color .2s; }
+    .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .btn.primary { color: #07131a; background: var(--accent); border-color: var(--accent); }
+    .profile-wrap { display: flex; justify-content: center; }
+    .profile-card { position: relative; width: min(320px, 100%); padding: 18px; background: linear-gradient(145deg, rgba(112,225,207,.15), rgba(139,167,255,.08)); border: 1px solid var(--border); border-radius: 28px; box-shadow: var(--shadow); transform: rotate(2deg); }
+    .avatar { aspect-ratio: 4 / 4.5; border-radius: 20px; display: grid; place-items: center; background: linear-gradient(145deg, #273c5b, #17243c); overflow: hidden; }
+    .avatar svg { width: 72%; max-height: 260px; }
+    .profile-caption { padding: 17px 5px 4px; }
+    .profile-caption strong { display: block; font-size: 1.1rem; }
+    .profile-caption span { color: var(--muted); font-size: .9rem; }
+    section { padding: 70px 0; }
+    .section-head { margin-bottom: 28px; }
+    .section-head .eyebrow { font-size: .76rem; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.65rem); line-height: 1.15; letter-spacing: -.045em; margin: 10px 0; }
+    .section-intro { max-width: 650px; color: var(--muted); margin: 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel { background: rgba(18,26,46,.82); border: 1px solid var(--border); border-radius: 20px; padding: 25px; }
+    .panel p { color: var(--muted); margin-bottom: 0; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 20px; }
+    .stat { background: var(--panel-2); border-radius: 14px; padding: 14px; }
+    .stat strong { display: block; font-size: 1.45rem; color: var(--accent); }
+    .stat span { font-size: .8rem; color: var(--muted); }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chip { border: 1px solid var(--border); border-radius: 999px; background: var(--panel-2); padding: 8px 13px; font-size: .9rem; }
+    .project-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .project { overflow: hidden; padding: 0; transition: transform .2s, border-color .2s; }
+    .project:hover { transform: translateY(-5px); border-color: rgba(112,225,207,.55); }
+    .project-art { height: 165px; display: grid; place-items: center; font-size: 3rem; background: linear-gradient(135deg, #203b53, #24274b); }
+    .project:nth-child(2) .project-art { background: linear-gradient(135deg, #4b2f61, #202b52); }
+    .project:nth-child(3) .project-art { background: linear-gradient(135deg, #18514f, #1d2b4d); }
+    .project-content { padding: 20px; }
+    .project-content h3 { margin: 0 0 8px; font-size: 1.15rem; }
+    .project-content p { color: var(--muted); font-size: .93rem; margin: 0 0 15px; }
+    .project-link { color: var(--accent); font-weight: 750; font-size: .9rem; }
+    .contact-box { display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; background: linear-gradient(120deg, rgba(112,225,207,.11), rgba(139,167,255,.09)); border: 1px solid var(--border); border-radius: 24px; padding: clamp(24px, 5vw, 45px); }
+    .contact-box p { color: var(--muted); }
+    .contact-list { display: grid; gap: 12px; }
+    .contact-item { padding: 13px 15px; background: rgba(11,16,32,.48); border: 1px solid var(--border); border-radius: 12px; overflow-wrap: anywhere; }
+    .contact-item span { display: block; color: var(--muted); font-size: .8rem; }
+    footer { border-top: 1px solid var(--border); color: var(--muted); padding: 25px 0; font-size: .88rem; }
+    footer .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; gap: 35px; padding-top: 65px; }
+      .profile-wrap { justify-content: flex-start; }
+      .profile-card { width: 270px; }
+      .about-grid, .contact-box { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(100% - 28px, 1100px); }
+      nav { min-height: 66px; flex-wrap: wrap; padding: 12px 0; }
+      .menu-btn { display: block; }
+      .nav-links { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 13px; padding: 8px 0 12px; }
+      .nav-links.open { display: flex; }
+      .hero { padding: 55px 0 45px; }
+      section { padding: 52px 0; }
+      .project-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container" aria-label="Navigasi utama">
+      <a class="brand" href="#beranda">PORTO<span>.</span></a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu ☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#beranda">Beranda</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#keahlian">Keahlian</a>
+        <a href="#proyek">Proyek</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="beranda">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Portofolio Pribadi</div>
+        <h1>Halo, saya <span class="gradient">Hasbullah.</span><br>Saya membangun hal digital.</h1>
+        <p>Saya mahasiswa Teknik Informatika yang berfokus pada pengembangan website, pengelolaan basis data, dan perancangan antarmuka yang responsif serta mudah digunakan. Ini adalah tempat untuk mengenal saya dan melihat karya-karya saya.</p>
+        <div class="actions">
+          <a class="btn primary" href="#proyek">Lihat Proyek <span aria-hidden="true">↗</span></a>
+          <a class="btn" href="#kontak">Hubungi Saya</a>
+        </div>
+      </div>
+      <div class="profile-wrap">
+        <div class="profile-card">
+          <div class="avatar" aria-label="Ilustrasi profil">
+            <svg viewBox="0 0 220 250" role="img" aria-label="Ilustrasi orang">
+              <circle cx="110" cy="76" r="43" fill="#e6b99a"/>
+              <path d="M67 76c-8-45 20-63 48-63 35 0 51 28 43 64l-12-23c-20 6-41 0-57-12-4 15-11 25-22 34z" fill="#182033"/>
+              <path d="M43 235c3-61 28-91 67-91s65 30 68 91" fill="#70e1cf"/>
+              <path d="M80 135l30 31 30-31 14 15-22 85H88l-22-85z" fill="#f3f6ff"/>
+              <path d="M94 163l16 18 16-18-8 72h-16z" fill="#8ba7ff"/>
+              <circle cx="94" cy="78" r="3" fill="#182033"/><circle cx="127" cy="78" r="3" fill="#182033"/>
+              <path d="M97 97q13 10 26 0" fill="none" stroke="#9a5d4b" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="profile-caption">
+            <strong>Hasbullah</strong>
+            <span>Mahasiswa Teknik Informatika • Web Developer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tentang">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">01 / Tentang Saya</div>
+          <h2>Kenali saya lebih dekat.</h2>
+          <p class="section-intro">Saya senang belajar hal baru, memecahkan masalah, dan mengubah ide menjadi karya yang bisa digunakan orang lain.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel">
+            <h3>Profil Singkat</h3>
+            <p>Perkenalkan, saya <strong>Hasbullah</strong>, mahasiswa Teknik Informatika yang mengembangkan kompetensi di bidang pemrograman web, pengelolaan basis data, dan desain antarmuka pengguna. Saya percaya proyek yang baik berawal dari rasa ingin tahu, perencanaan, dan kemauan untuk terus memperbaiki diri.</p>
+          </div>
+          <div class="panel">
+            <h3>Fokus Saya</h3>
+            <p>Saya berfokus pada pengembangan aplikasi web responsif, implementasi fitur CRUD, integrasi basis data relasional, serta perancangan UI/UX yang berorientasi pada kebutuhan pengguna.</p>
+            <div class="stats">
+              <div class="stat"><strong>03+</strong><span>Proyek latihan</span></div>
+              <div class="stat"><strong>05+</strong><span>Teknologi dipelajari</span></div>
+              <div class="stat"><strong>100%</strong><span>Semangat belajar</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="keahlian">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">02 / Keahlian</div>
+          <h2>Teknologi yang saya pelajari.</h2>
+          <p class="section-intro">Keahlian berikut menampilkan area teknis yang relevan dengan pengembangan aplikasi web. Sesuaikan tingkat penguasaan dengan pengalaman nyata Anda.</p>
+        </div>
+        <div class="panel">
+          <div class="skills">
+            <span class="chip">HTML5 & Semantic Markup</span><span class="chip">CSS3 & Responsive Design</span>
+            <span class="chip">JavaScript Fundamentals</span><span class="chip">PHP</span>
+            <span class="chip">Laravel Framework</span><span class="chip">MySQL & Relational Database</span>
+            <span class="chip">CRUD Application Development</span><span class="chip">UI/UX Prototyping — Figma</span>
+            <span class="chip">WordPress</span><span class="chip">Web Troubleshooting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyek">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">03 / Proyek Pilihan</div>
+          <h2>Beberapa karya saya.</h2>
+          <p class="section-intro">Tampilkan proyek terbaik Anda. Isi deskripsi, teknologi, dan tautan demo dengan data proyek yang sebenarnya.</p>
+        </div>
+        <div class="project-grid">
+          <article class="panel project">
+            <div class="project-art" aria-hidden="true">🛒</div>
+            <div class="project-content">
+              <h3>Website Katalog Produk</h3>
+              <p>Website untuk menampilkan daftar produk, detail produk, harga, dan informasi stok.</p>
+              <div class="skills"><span class="chip">Laravel</span><span class="chip">MySQL</span></div>
+              <a class="project-link" href="#kontak">Tanya tentang proyek ↗</a>
+            </div>
+          </article>
+          <article class="panel project">
+            <div class="project-art" aria-hidden="true">📱</div>
+            <div class="project-content">
+              <h3>Aplikasi Pesan Galon</h3>
+              <p>Konsep aplikasi pemesanan air galon dengan alur checkout dan pelacakan pesanan.</p>
+              <div class="skills"><span class="chip">UI/UX</span><span class="chip">Figma</span></div>
+              <a class="project-link" href="#kontak">Tanya tentang proyek ↗</a>
+            </div>
+          </article>
+          <article class="panel project">
+            <div class="project-art" aria-hidden="true">🌐</div>
+            <div class="project-content">
+              <h3>Website Wisata & Kuliner</h3>
+              <p>Website informasi tempat wisata dan kuliner lokal dengan konten yang mudah dijelajahi.</p>
+              <div class="skills"><span class="chip">WordPress</span><span class="chip">Web Design</span></div>
+              <a class="project-link" href="#kontak">Tanya tentang proyek ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontak">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <div class="eyebrow">04 / Kontak</div>
+            <h2>Ada ide untuk dikerjakan bersama?</h2>
+            <p>Silakan hubungi saya untuk berdiskusi tentang proyek, kolaborasi, atau kesempatan belajar. Email yang diberikan masih belum lengkap, dan profil LinkedIn belum tersedia.</p>
+            <a class="btn primary" href="#kontak">Kontak</a>
+          </div>
+          <div class="contact-list">
+            <a class="contact-item" href="#kontak"><span>Email</span>hasbulllah <small>(alamat email belum lengkap)</small></a>
+            <a class="contact-item" href="#kontak"><span>LinkedIn</span>Belum tersedia</a>
+            <a class="contact-item" href="#kontak"><span>GitHub</span>Tambahkan URL profil GitHub Anda</a>
+            <div class="contact-item"><span>Lokasi</span>Indonesia</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> Hasbullah. Dibuat dengan HTML, CSS, dan JavaScript.</span>
+      <a href="#beranda">Kembali ke atas ↑</a>
+    </div>
+  </footer>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
